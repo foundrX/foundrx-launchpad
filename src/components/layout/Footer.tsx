@@ -35,7 +35,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-foreground text-background py-16 md:py-20">
+    <footer className="bg-muted py-16 md:py-20">
       <div className="container px-4">
         <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-12">
           {/* Brand Column */}
@@ -46,7 +46,7 @@ const Footer = () => {
               </div>
               <span className="text-xl font-bold font-display">FoundrX</span>
             </a>
-            <p className="text-background/60 text-sm mb-6 max-w-xs">
+            <p className="text-muted-foreground text-sm mb-6 max-w-xs">
               Empowering young entrepreneurs to build, learn, and grow together.
             </p>
             <div className="flex gap-4">
@@ -54,10 +54,10 @@ const Footer = () => {
                 <a
                   key={social.label}
                   href={social.href}
-                  className="w-10 h-10 rounded-full bg-background/10 hover:bg-background/20 flex items-center justify-center transition-colors"
+                  className="w-10 h-10 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center transition-colors"
                   aria-label={social.label}
                 >
-                  <social.icon className="w-5 h-5" />
+                  <social.icon className="w-5 h-5 text-primary" />
                 </a>
               ))}
             </div>
@@ -69,10 +69,10 @@ const Footer = () => {
               <h4 className="font-bold mb-4">{title}</h4>
               <ul className="space-y-3">
                 {links.map((link) => (
-                  <li key={link.label}>
+                <li key={link.label}>
                     <a
                       href={link.href}
-                      className="text-sm text-background/60 hover:text-background transition-colors"
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
                     >
                       {link.label}
                     </a>
@@ -84,11 +84,11 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-background/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-background/60">
+        <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-muted-foreground">
             © 2024 FoundrX. All rights reserved.
           </p>
-          <p className="text-sm text-background/60">
+          <p className="text-sm text-muted-foreground">
             Made with ❤️ by young founders, for young founders
           </p>
         </div>
