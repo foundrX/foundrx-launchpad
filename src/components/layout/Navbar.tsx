@@ -30,7 +30,7 @@ const Navbar = () => {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm font-medium text-muted-foreground hover:text-primary active:text-primary active:drop-shadow-[0_0_8px_hsl(210,100%,55%)] transition-all duration-200"
               >
                 {link.label}
               </a>
@@ -39,10 +39,10 @@ const Navbar = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
-            <Button variant="ghost" className="font-medium">
+            <Button variant="ghost" className="font-medium hover:text-primary active:shadow-[0_0_15px_hsl(210,100%,55%,0.5)] transition-all">
               Sign In
             </Button>
-            <Button className="gradient-primary text-primary-foreground border-0 rounded-full px-6">
+            <Button className="gradient-primary text-primary-foreground border-0 rounded-full px-6 active:shadow-[0_0_20px_hsl(210,100%,55%,0.6)] transition-all">
               Get Started
             </Button>
           </div>
@@ -65,7 +65,7 @@ const Navbar = () => {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2"
+                  className="text-sm font-medium text-muted-foreground hover:text-primary active:text-primary active:drop-shadow-[0_0_8px_hsl(210,100%,55%)] transition-all py-2"
                   onClick={() => setIsOpen(false)}
                 >
                   {link.label}
