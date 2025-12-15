@@ -1,7 +1,10 @@
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Rocket, ArrowRight } from "lucide-react";
-
+import { useAuth } from "@/hooks/useAuth";
 const Hero = () => {
+  const { user } = useAuth();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background gradient orbs */}
@@ -29,10 +32,12 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="gradient-primary text-primary-foreground border-0 text-lg px-8 py-6 rounded-full animate-pulse-glow">
-              Get Started Free
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
+            <Link to={user ? "/apply" : "/auth"}>
+              <Button size="lg" className="gradient-primary text-primary-foreground border-0 text-lg px-8 py-6 rounded-full animate-pulse-glow">
+                {user ? "Apply Now" : "Get Started Free"}
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </Link>
             <Button size="lg" variant="outline" className="text-lg px-8 py-6 rounded-full border-2">
               Watch Demo
             </Button>

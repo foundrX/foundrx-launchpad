@@ -14,7 +14,105 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      applications: {
+        Row: {
+          age: number | null
+          availability: string | null
+          business_idea: string | null
+          created_at: string
+          email: string
+          experience_level: string
+          full_name: string
+          id: string
+          linkedin_url: string | null
+          phone: string | null
+          portfolio_url: string | null
+          role: string
+          school: string | null
+          skills: string[] | null
+          status: string
+          updated_at: string
+          user_id: string
+          why_join: string
+        }
+        Insert: {
+          age?: number | null
+          availability?: string | null
+          business_idea?: string | null
+          created_at?: string
+          email: string
+          experience_level: string
+          full_name: string
+          id?: string
+          linkedin_url?: string | null
+          phone?: string | null
+          portfolio_url?: string | null
+          role: string
+          school?: string | null
+          skills?: string[] | null
+          status?: string
+          updated_at?: string
+          user_id: string
+          why_join: string
+        }
+        Update: {
+          age?: number | null
+          availability?: string | null
+          business_idea?: string | null
+          created_at?: string
+          email?: string
+          experience_level?: string
+          full_name?: string
+          id?: string
+          linkedin_url?: string | null
+          phone?: string | null
+          portfolio_url?: string | null
+          role?: string
+          school?: string | null
+          skills?: string[] | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+          why_join?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          age: number | null
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          phone: string | null
+          school: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          age?: number | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          school?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          age?: number | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          school?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
