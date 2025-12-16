@@ -113,6 +113,134 @@ export type Database = {
         }
         Relationships: []
       }
+      reviews: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          image_url: string | null
+          name: string
+          rating: number | null
+          role: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          name: string
+          rating?: number | null
+          role?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          name?: string
+          rating?: number | null
+          role?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["user_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["user_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["user_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      workshop_registrations: {
+        Row: {
+          created_at: string
+          id: string
+          user_id: string
+          workshop_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          user_id: string
+          workshop_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          user_id?: string
+          workshop_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workshop_registrations_workshop_id_fkey"
+            columns: ["workshop_id"]
+            isOneToOne: false
+            referencedRelation: "workshops"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workshops: {
+        Row: {
+          category: string | null
+          created_at: string
+          date: string
+          description: string
+          duration_minutes: number | null
+          host_company: string | null
+          host_image_url: string | null
+          host_name: string
+          host_title: string | null
+          id: string
+          max_participants: number | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          date: string
+          description: string
+          duration_minutes?: number | null
+          host_company?: string | null
+          host_image_url?: string | null
+          host_name: string
+          host_title?: string | null
+          id?: string
+          max_participants?: number | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          date?: string
+          description?: string
+          duration_minutes?: number | null
+          host_company?: string | null
+          host_image_url?: string | null
+          host_name?: string
+          host_title?: string | null
+          id?: string
+          max_participants?: number | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -121,7 +249,14 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      user_role:
+        | "student_founder"
+        | "mentor"
+        | "investor"
+        | "small_business"
+        | "chartered_accountant"
+        | "admin_team"
+        | "freelancer"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -248,6 +383,16 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      user_role: [
+        "student_founder",
+        "mentor",
+        "investor",
+        "small_business",
+        "chartered_accountant",
+        "admin_team",
+        "freelancer",
+      ],
+    },
   },
 } as const

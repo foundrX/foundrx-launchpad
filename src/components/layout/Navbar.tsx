@@ -10,10 +10,9 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const navLinks = [
-    { href: "#how-we-help", label: "How We Help" },
-    { href: "#workshops", label: "Workshops" },
-    { href: "#community", label: "Community" },
-    { href: "#about", label: "About" },
+    { href: "/#how-we-help", label: "How We Help" },
+    { href: "/#workshops", label: "Workshops" },
+    { href: "/about", label: "About" },
   ];
 
   return (
@@ -31,13 +30,23 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium text-muted-foreground hover:text-primary active:text-primary active:drop-shadow-[0_0_8px_hsl(210,100%,55%)] transition-all duration-200"
-              >
-                {link.label}
-              </a>
+              link.href.startsWith("/") && !link.href.includes("#") ? (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  className="text-sm font-medium text-muted-foreground hover:text-primary active:text-primary active:drop-shadow-[0_0_8px_hsl(210,100%,55%)] transition-all duration-200"
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm font-medium text-muted-foreground hover:text-primary active:text-primary active:drop-shadow-[0_0_8px_hsl(210,100%,55%)] transition-all duration-200"
+                >
+                  {link.label}
+                </a>
+              )
             ))}
           </div>
 
@@ -70,10 +79,10 @@ const Navbar = () => {
                   Sign In
                 </Button>
                 <Button 
-                  onClick={() => navigate("/auth")}
+                  onClick={() => navigate("/join")}
                   className="gradient-primary text-primary-foreground border-0 rounded-full px-6 active:shadow-[0_0_20px_hsl(210,100%,55%,0.6)] transition-all"
                 >
-                  Get Started
+                  Join FoundrX
                 </Button>
               </>
             )}
@@ -94,14 +103,25 @@ const Navbar = () => {
           <div className="md:hidden py-4 border-t border-border">
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm font-medium text-muted-foreground hover:text-primary active:text-primary active:drop-shadow-[0_0_8px_hsl(210,100%,55%)] transition-all py-2"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {link.label}
-                </a>
+                link.href.startsWith("/") && !link.href.includes("#") ? (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    className="text-sm font-medium text-muted-foreground hover:text-primary active:text-primary active:drop-shadow-[0_0_8px_hsl(210,100%,55%)] transition-all py-2"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="text-sm font-medium text-muted-foreground hover:text-primary active:text-primary active:drop-shadow-[0_0_8px_hsl(210,100%,55%)] transition-all py-2"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {link.label}
+                  </a>
+                )
               ))}
               <div className="flex flex-col gap-2 pt-4 border-t border-border">
                 {user ? (
@@ -119,8 +139,8 @@ const Navbar = () => {
                     <Button variant="ghost" onClick={() => { navigate("/auth"); setIsOpen(false); }} className="justify-start">
                       Sign In
                     </Button>
-                    <Button onClick={() => { navigate("/auth"); setIsOpen(false); }} className="gradient-primary text-primary-foreground border-0 rounded-full">
-                      Get Started
+                    <Button onClick={() => { navigate("/join"); setIsOpen(false); }} className="gradient-primary text-primary-foreground border-0 rounded-full">
+                      Join FoundrX
                     </Button>
                   </>
                 )}
