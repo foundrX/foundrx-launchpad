@@ -1,20 +1,20 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import Hero from "@/components/sections/Hero";
+import HeroCarousel from "@/components/sections/HeroCarousel";
 import HowWeHelp from "@/components/sections/HowWeHelp";
-import Workshops from "@/components/sections/Workshops";
+import WorkshopsList from "@/components/sections/WorkshopsList";
 import CTA from "@/components/sections/CTA";
 
 const Index = () => {
   return (
     <main className="min-h-screen">
       <Navbar />
-      <Hero />
+      <HeroCarousel />
       <section id="how-we-help">
         <HowWeHelp />
       </section>
       <section id="workshops">
-        <Workshops />
+        <WorkshopsList />
       </section>
       <CTA />
       <Footer />
