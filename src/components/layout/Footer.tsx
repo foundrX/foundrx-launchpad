@@ -28,14 +28,15 @@ const Footer = () => {
     ],
     "Get in Touch": [
       { label: "+91 9897004701", href: "tel:+919897004701", icon: Phone },
+      { label: "foundrxofficial@gmail.com", href: "mailto:foundrxofficial@gmail.com", icon: Mail },
     ],
   };
 
   const socialLinks = [
     { icon: Twitter, href: "#", label: "Twitter" },
     { icon: Linkedin, href: "#", label: "LinkedIn" },
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Mail, href: "#", label: "Email" },
+    { icon: Instagram, href: "https://instagram.com/FoundrX_Official", label: "Instagram" },
+    { icon: Mail, href: "mailto:foundrxofficial@gmail.com", label: "Email" },
   ];
 
   return (
