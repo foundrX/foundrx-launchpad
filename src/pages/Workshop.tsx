@@ -89,6 +89,21 @@ const Workshop = () => {
     } else {
       toast({ title: "Successfully registered!", description: "You're all set for the workshop." });
       setIsRegistered(true);
+
+      // Send email notification
+      try {
+        await supabase.functions.invoke("send-workshop-notification", {
+          body: {
+            userEmail: user.email,
+            userName: user.user_metadata?.full_name || user.email?.split("@")[0],
+            workshopTitle: workshop.title,
+            workshopDate: format(new Date(workshop.date), "EEEE, MMMM d, yyyy 'at' h:mm a"),
+            hostName: workshop.host_name,
+          },
+        });
+      } catch (emailError) {
+        console.error("Failed to send email notification:", emailError);
+      }
     }
     setRegistering(false);
   };

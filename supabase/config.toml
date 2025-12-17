@@ -1,1 +1,7 @@
 project_id = "fkykpeiqsctlkfbxlwtc"
+
+[functions.send-workshop-notification]
+verify_jwt = false
+
+[functions.send-application-notification]
+verify_jwt = false

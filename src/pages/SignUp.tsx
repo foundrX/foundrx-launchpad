@@ -6,11 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Rocket, ArrowLeft, GraduationCap, Briefcase, TrendingUp, Calculator, Users, Wrench } from "lucide-react";
+import { Rocket, ArrowLeft, GraduationCap, Briefcase, TrendingUp, Calculator, Users, Wrench, Scale, Phone, User } from "lucide-react";
 import { z } from "zod";
 
 const signUpSchema = z.object({
+  fullName: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
   email: z.string().email("Please enter a valid email"),
+  phone: z.string().optional(),
   password: z.string().min(6, "Password must be at least 6 characters"),
   confirmPassword: z.string(),
 }).refine((data) => data.password === data.confirmPassword, {
@@ -18,7 +20,7 @@ const signUpSchema = z.object({
   path: ["confirmPassword"],
 });
 
-type UserRole = "student_founder" | "mentor" | "investor" | "small_business" | "chartered_accountant" | "admin_team" | "freelancer";
+type UserRole = "student_founder" | "mentor" | "investor" | "small_business" | "chartered_accountant" | "admin_team" | "freelancer" | "lawyer";
 
 const roleConfig: Record<UserRole, { label: string; description: string; icon: React.ElementType }> = {
   student_founder: { label: "Student Founder", description: "Young entrepreneurs building their first ventures", icon: GraduationCap },
@@ -26,6 +28,7 @@ const roleConfig: Record<UserRole, { label: string; description: string; icon: R
   investor: { label: "Investor", description: "Looking to support promising young talent", icon: TrendingUp },
   small_business: { label: "Small Business Owner", description: "Growing your business with modern strategies", icon: Briefcase },
   chartered_accountant: { label: "Chartered Accountant", description: "Financial experts and advisors", icon: Calculator },
+  lawyer: { label: "Lawyer", description: "Legal professionals and advisors", icon: Scale },
   admin_team: { label: "Administrative Team", description: "Operations and management professionals", icon: Users },
   freelancer: { label: "Freelancer", description: "Independent professionals and contractors", icon: Wrench },
 };
@@ -35,7 +38,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({ email: "", password: "", confirmPassword: "" });
+  const [formData, setFormData] = useState({ fullName: "", email: "", phone: "", password: "", confirmPassword: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const userRole = role as UserRole;
@@ -78,6 +81,10 @@ const SignUp = () => {
       password: formData.password,
       options: {
         emailRedirectTo: `${window.location.origin}/`,
+        data: {
+          full_name: formData.fullName,
+          phone: formData.phone,
+        },
       },
     });
 
@@ -96,6 +103,16 @@ const SignUp = () => {
 
       if (roleError) {
         console.error("Failed to assign role:", roleError);
+      }
+
+      // Update the profile with full name and phone
+      const { error: profileError } = await supabase.from("profiles").update({
+        full_name: formData.fullName,
+        phone: formData.phone || null,
+      }).eq("user_id", data.user.id);
+
+      if (profileError) {
+        console.error("Failed to update profile:", profileError);
       }
 
       toast({ title: "Account created!", description: "Welcome to FoundrX!" });
@@ -134,6 +151,22 @@ const SignUp = () => {
           <CardContent className="p-6">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
+                <Label htmlFor="fullName">Full Name</Label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    id="fullName"
+                    type="text"
+                    placeholder="John Doe"
+                    value={formData.fullName}
+                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                    className="bg-muted border-border pl-10"
+                  />
+                </div>
+                {errors.fullName && <p className="text-sm text-destructive">{errors.fullName}</p>}
+              </div>
+
+              <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
@@ -144,6 +177,21 @@ const SignUp = () => {
                   className="bg-muted border-border"
                 />
                 {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="phone">Phone Number (Optional)</Label>
+                <div className="relative">
+                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    id="phone"
+                    type="tel"
+                    placeholder="+1 234 567 890"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="bg-muted border-border pl-10"
+                  />
+                </div>
               </div>
 
               <div className="space-y-2">
