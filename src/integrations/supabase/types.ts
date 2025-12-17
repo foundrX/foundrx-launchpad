@@ -77,37 +77,209 @@ export type Database = {
         }
         Relationships: []
       }
+      collaboration_requests: {
+        Row: {
+          created_at: string
+          from_user_id: string
+          id: string
+          idea_id: string | null
+          message: string
+          status: string | null
+          to_user_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          from_user_id: string
+          id?: string
+          idea_id?: string | null
+          message: string
+          status?: string | null
+          to_user_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          from_user_id?: string
+          id?: string
+          idea_id?: string | null
+          message?: string
+          status?: string | null
+          to_user_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "collaboration_requests_idea_id_fkey"
+            columns: ["idea_id"]
+            isOneToOne: false
+            referencedRelation: "ideas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      idea_feedback: {
+        Row: {
+          content: string
+          created_at: string
+          feedback_type: string | null
+          id: string
+          idea_id: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          feedback_type?: string | null
+          id?: string
+          idea_id: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          feedback_type?: string | null
+          id?: string
+          idea_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "idea_feedback_idea_id_fkey"
+            columns: ["idea_id"]
+            isOneToOne: false
+            referencedRelation: "ideas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ideas: {
+        Row: {
+          created_at: string
+          description: string
+          goals: string | null
+          id: string
+          images: string[] | null
+          required_help: string | null
+          status: string | null
+          title: string
+          updated_at: string
+          user_id: string
+          video_url: string | null
+          views_count: number | null
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          goals?: string | null
+          id?: string
+          images?: string[] | null
+          required_help?: string | null
+          status?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          goals?: string | null
+          id?: string
+          images?: string[] | null
+          required_help?: string | null
+          status?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          created_at: string
+          id: string
+          is_read: boolean | null
+          message: string | null
+          related_id: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_read?: boolean | null
+          message?: string | null
+          related_id?: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_read?: boolean | null
+          message?: string | null
+          related_id?: string | null
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           age: number | null
+          avatar_url: string | null
+          behavior_score: number | null
+          bio: string | null
           created_at: string
           email: string | null
           full_name: string | null
           id: string
+          is_verified: boolean | null
           phone: string | null
+          portfolio_url: string | null
           school: string | null
+          skills: string[] | null
           updated_at: string
           user_id: string
         }
         Insert: {
           age?: number | null
+          avatar_url?: string | null
+          behavior_score?: number | null
+          bio?: string | null
           created_at?: string
           email?: string | null
           full_name?: string | null
           id?: string
+          is_verified?: boolean | null
           phone?: string | null
+          portfolio_url?: string | null
           school?: string | null
+          skills?: string[] | null
           updated_at?: string
           user_id: string
         }
         Update: {
           age?: number | null
+          avatar_url?: string | null
+          behavior_score?: number | null
+          bio?: string | null
           created_at?: string
           email?: string | null
           full_name?: string | null
           id?: string
+          is_verified?: boolean | null
           phone?: string | null
+          portfolio_url?: string | null
           school?: string | null
+          skills?: string[] | null
           updated_at?: string
           user_id?: string
         }
@@ -140,6 +312,27 @@ export type Database = {
           name?: string
           rating?: number | null
           role?: string | null
+        }
+        Relationships: []
+      }
+      user_follows: {
+        Row: {
+          created_at: string
+          follower_id: string
+          following_id: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          follower_id: string
+          following_id: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          follower_id?: string
+          following_id?: string
+          id?: string
         }
         Relationships: []
       }
