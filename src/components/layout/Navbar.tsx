@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Rocket, LogOut } from "lucide-react";
+import { Menu, X, Rocket, LogOut, User } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,6 +54,14 @@ const Navbar = () => {
           <div className="hidden md:flex items-center gap-4">
             {user ? (
               <>
+                <Button 
+                  variant="ghost"
+                  onClick={() => navigate("/profile")}
+                  className="font-medium hover:text-primary active:shadow-[0_0_15px_hsl(210,100%,55%,0.5)] transition-all"
+                >
+                  <User className="w-4 h-4 mr-2" />
+                  Profile
+                </Button>
                 <Button 
                   onClick={() => navigate("/apply")}
                   className="gradient-primary text-primary-foreground border-0 rounded-full px-6 active:shadow-[0_0_20px_hsl(210,100%,55%,0.6)] transition-all"
@@ -126,6 +134,10 @@ const Navbar = () => {
               <div className="flex flex-col gap-2 pt-4 border-t border-border">
                 {user ? (
                   <>
+                    <Button variant="ghost" onClick={() => { navigate("/profile"); setIsOpen(false); }} className="justify-start">
+                      <User className="w-4 h-4 mr-2" />
+                      Profile
+                    </Button>
                     <Button onClick={() => { navigate("/apply"); setIsOpen(false); }} className="gradient-primary text-primary-foreground border-0 rounded-full">
                       Apply Now
                     </Button>

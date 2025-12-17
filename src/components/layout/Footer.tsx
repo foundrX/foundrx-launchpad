@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Rocket, Mail, Twitter, Linkedin, Instagram } from "lucide-react";
+import { Rocket, Mail, Twitter, Linkedin, Instagram, Phone } from "lucide-react";
 
 const Footer = () => {
   const footerLinks = {
@@ -25,6 +25,9 @@ const Footer = () => {
       { label: "Privacy Policy", href: "#" },
       { label: "Terms of Service", href: "#" },
       { label: "Cookie Policy", href: "#" },
+    ],
+    "Get in Touch": [
+      { label: "+91 9897004701", href: "tel:+919897004701", icon: Phone },
     ],
   };
 
@@ -70,11 +73,12 @@ const Footer = () => {
               <h4 className="font-bold mb-4">{title}</h4>
               <ul className="space-y-3">
                 {links.map((link) => (
-                <li key={link.label}>
+                  <li key={link.label}>
                     <a
                       href={link.href}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
                     >
+                      {'icon' in link && link.icon && <link.icon className="w-4 h-4" />}
                       {link.label}
                     </a>
                   </li>
