@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Rocket, ArrowLeft, GraduationCap, Briefcase, TrendingUp, Calculator, Users, Wrench, Scale, Phone, User } from "lucide-react";
+import { Rocket, ArrowLeft, GraduationCap, Briefcase, TrendingUp, Users, Wrench, Scale, Phone, User } from "lucide-react";
 import { z } from "zod";
 
 const signUpSchema = z.object({
@@ -20,16 +20,14 @@ const signUpSchema = z.object({
   path: ["confirmPassword"],
 });
 
-type UserRole = "student_founder" | "mentor" | "investor" | "small_business" | "chartered_accountant" | "admin_team" | "freelancer" | "lawyer";
+type UserRole = "student_founder" | "mentor" | "investor" | "small_business" | "expert_professional" | "freelancer";
 
 const roleConfig: Record<UserRole, { label: string; description: string; icon: React.ElementType }> = {
   student_founder: { label: "Student Founder", description: "Young entrepreneurs building their first ventures", icon: GraduationCap },
   mentor: { label: "Mentor", description: "Experienced professionals guiding the next generation", icon: Users },
   investor: { label: "Investor", description: "Looking to support promising young talent", icon: TrendingUp },
   small_business: { label: "Small Business Owner", description: "Growing your business with modern strategies", icon: Briefcase },
-  chartered_accountant: { label: "Chartered Accountant", description: "Financial experts and advisors", icon: Calculator },
-  lawyer: { label: "Lawyer", description: "Legal professionals and advisors", icon: Scale },
-  admin_team: { label: "Administrative Team", description: "Operations and management professionals", icon: Users },
+  expert_professional: { label: "Expert Professional", description: "CAs, Lawyers & Administrative experts", icon: Scale },
   freelancer: { label: "Freelancer", description: "Independent professionals and contractors", icon: Wrench },
 };
 

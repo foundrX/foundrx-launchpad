@@ -1,15 +1,13 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
-import { Rocket, GraduationCap, Briefcase, TrendingUp, Calculator, Users, Wrench, ArrowRight, Scale } from "lucide-react";
+import { Rocket, GraduationCap, Briefcase, TrendingUp, Users, Wrench, ArrowRight, Scale } from "lucide-react";
 
 const roles = [
   { id: "student_founder", label: "Student Founder", description: "Young entrepreneurs building their first ventures", icon: GraduationCap, color: "from-blue-500 to-cyan-500" },
   { id: "mentor", label: "Mentor", description: "Experienced professionals guiding the next generation", icon: Users, color: "from-purple-500 to-pink-500" },
   { id: "investor", label: "Investor", description: "Looking to support promising young talent", icon: TrendingUp, color: "from-green-500 to-emerald-500" },
   { id: "small_business", label: "Small Business Owner", description: "Growing your business with modern strategies", icon: Briefcase, color: "from-orange-500 to-amber-500" },
-  { id: "chartered_accountant", label: "Chartered Accountant", description: "Financial experts and advisors", icon: Calculator, color: "from-red-500 to-rose-500" },
-  { id: "lawyer", label: "Lawyer", description: "Legal professionals and advisors", icon: Scale, color: "from-slate-500 to-zinc-500" },
-  { id: "admin_team", label: "Administrative Team", description: "Operations and management professionals", icon: Users, color: "from-indigo-500 to-violet-500" },
+  { id: "expert_professional", label: "Expert Professional", description: "CAs, Lawyers & Administrative experts", icon: Scale, color: "from-red-500 to-rose-500" },
   { id: "freelancer", label: "Freelancer", description: "Independent professionals and contractors", icon: Wrench, color: "from-teal-500 to-cyan-500" },
 ];
 
