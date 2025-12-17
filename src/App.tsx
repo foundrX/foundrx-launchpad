@@ -18,6 +18,7 @@ import IdeaDetail from "./pages/IdeaDetail";
 import NewIdea from "./pages/NewIdea";
 import Notifications from "./pages/Notifications";
 import Collaborations from "./pages/Collaborations";
+import Team from "./pages/Team";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,7 @@ const App = () => (
             <Route path="/ideas/:id" element={<IdeaDetail />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/collaborations" element={<Collaborations />} />
+            <Route path="/team" element={<Team />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
