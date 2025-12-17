@@ -11,6 +11,7 @@ import About from "./pages/About";
 import Workshop from "./pages/Workshop";
 import Join from "./pages/Join";
 import SignUp from "./pages/SignUp";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/workshop/:id" element={<Workshop />} />
             <Route path="/join" element={<Join />} />
             <Route path="/signup/:role" element={<SignUp />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
