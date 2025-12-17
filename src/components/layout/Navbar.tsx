@@ -1,18 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Rocket, LogOut, User } from "lucide-react";
+import { Menu, X, Rocket, LogOut, User, Lightbulb, Bell, Users } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (user) {
+      fetchUnreadCount();
+    }
+  }, [user]);
+
+  const fetchUnreadCount = async () => {
+    if (!user) return;
+    const { count } = await supabase
+      .from("notifications")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", user.id)
+      .eq("is_read", false);
+    setUnreadCount(count || 0);
+  };
+
   const navLinks = [
-    { href: "/#how-we-help", label: "How We Help" },
+    { href: "/ideas", label: "Ideas" },
     { href: "/#workshops", label: "Workshops" },
     { href: "/about", label: "About" },
+    { href: "/terms", label: "Terms" },
   ];
 
   return (
@@ -56,6 +76,25 @@ const Navbar = () => {
               <>
                 <Button 
                   variant="ghost"
+                  onClick={() => navigate("/notifications")}
+                  className="font-medium hover:text-primary active:shadow-[0_0_15px_hsl(210,100%,55%,0.5)] transition-all relative"
+                >
+                  <Bell className="w-4 h-4" />
+                  {unreadCount > 0 && (
+                    <Badge className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center text-xs gradient-primary">
+                      {unreadCount}
+                    </Badge>
+                  )}
+                </Button>
+                <Button 
+                  variant="ghost"
+                  onClick={() => navigate("/collaborations")}
+                  className="font-medium hover:text-primary active:shadow-[0_0_15px_hsl(210,100%,55%,0.5)] transition-all"
+                >
+                  <Users className="w-4 h-4" />
+                </Button>
+                <Button 
+                  variant="ghost"
                   onClick={() => navigate("/profile")}
                   className="font-medium hover:text-primary active:shadow-[0_0_15px_hsl(210,100%,55%,0.5)] transition-all"
                 >
@@ -73,8 +112,7 @@ const Navbar = () => {
                   onClick={signOut}
                   className="font-medium hover:text-primary active:shadow-[0_0_15px_hsl(210,100%,55%,0.5)] transition-all"
                 >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Sign Out
+                  <LogOut className="w-4 h-4" />
                 </Button>
               </>
             ) : (
@@ -134,6 +172,17 @@ const Navbar = () => {
               <div className="flex flex-col gap-2 pt-4 border-t border-border">
                 {user ? (
                   <>
+                    <Button variant="ghost" onClick={() => { navigate("/notifications"); setIsOpen(false); }} className="justify-start relative">
+                      <Bell className="w-4 h-4 mr-2" />
+                      Notifications
+                      {unreadCount > 0 && (
+                        <Badge className="ml-2 gradient-primary">{unreadCount}</Badge>
+                      )}
+                    </Button>
+                    <Button variant="ghost" onClick={() => { navigate("/collaborations"); setIsOpen(false); }} className="justify-start">
+                      <Users className="w-4 h-4 mr-2" />
+                      Collaborations
+                    </Button>
                     <Button variant="ghost" onClick={() => { navigate("/profile"); setIsOpen(false); }} className="justify-start">
                       <User className="w-4 h-4 mr-2" />
                       Profile
