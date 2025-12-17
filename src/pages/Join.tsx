@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
-import { Rocket, GraduationCap, Briefcase, TrendingUp, Calculator, Users, Wrench, ArrowRight } from "lucide-react";
+import { Rocket, GraduationCap, Briefcase, TrendingUp, Calculator, Users, Wrench, ArrowRight, Scale } from "lucide-react";
 
 const roles = [
   { id: "student_founder", label: "Student Founder", description: "Young entrepreneurs building their first ventures", icon: GraduationCap, color: "from-blue-500 to-cyan-500" },
@@ -8,6 +8,7 @@ const roles = [
   { id: "investor", label: "Investor", description: "Looking to support promising young talent", icon: TrendingUp, color: "from-green-500 to-emerald-500" },
   { id: "small_business", label: "Small Business Owner", description: "Growing your business with modern strategies", icon: Briefcase, color: "from-orange-500 to-amber-500" },
   { id: "chartered_accountant", label: "Chartered Accountant", description: "Financial experts and advisors", icon: Calculator, color: "from-red-500 to-rose-500" },
+  { id: "lawyer", label: "Lawyer", description: "Legal professionals and advisors", icon: Scale, color: "from-slate-500 to-zinc-500" },
   { id: "admin_team", label: "Administrative Team", description: "Operations and management professionals", icon: Users, color: "from-indigo-500 to-violet-500" },
   { id: "freelancer", label: "Freelancer", description: "Independent professionals and contractors", icon: Wrench, color: "from-teal-500 to-cyan-500" },
 ];
@@ -33,7 +34,7 @@ const Join = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
           {roles.map((role) => {
             const Icon = role.icon;
             return (

@@ -165,6 +165,19 @@ const Apply = () => {
 
       if (error) throw error;
 
+      // Send email notification
+      try {
+        await supabase.functions.invoke("send-application-notification", {
+          body: {
+            userEmail: formData.email,
+            userName: formData.full_name,
+            role: formData.role,
+          },
+        });
+      } catch (emailError) {
+        console.error("Failed to send email notification:", emailError);
+      }
+
       setSubmitted(true);
       toast({
         title: "Application submitted!",
