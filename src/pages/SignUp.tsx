@@ -115,7 +115,20 @@ const SignUp = () => {
         console.error("Failed to update profile:", profileError);
       }
 
-      toast({ title: "Account created!", description: "Welcome to FoundrX!" });
+      // Send welcome email
+      try {
+        await supabase.functions.invoke("send-welcome-email", {
+          body: {
+            userEmail: formData.email,
+            userName: formData.fullName,
+            role: userRole,
+          },
+        });
+      } catch (emailError) {
+        console.error("Failed to send welcome email:", emailError);
+      }
+
+      toast({ title: "Account created!", description: "Welcome to FoundrX! Check your email." });
       navigate("/");
     }
 
