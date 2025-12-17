@@ -3,6 +3,7 @@ import Footer from "@/components/layout/Footer";
 import HeroCarousel from "@/components/sections/HeroCarousel";
 import HowWeHelp from "@/components/sections/HowWeHelp";
 import WorkshopsList from "@/components/sections/WorkshopsList";
+import PricingSection from "@/components/sections/PricingSection";
 import CTA from "@/components/sections/CTA";
 
 const Index = () => {
@@ -12,6 +13,9 @@ const Index = () => {
       <HeroCarousel />
       <section id="how-we-help">
         <HowWeHelp />
+      </section>
+      <section id="pricing">
+        <PricingSection />
       </section>
       <section id="workshops">
         <WorkshopsList />
