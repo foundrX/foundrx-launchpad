@@ -22,9 +22,9 @@ const Footer = () => {
       { label: "Press", href: "#" },
     ],
     Legal: [
-      { label: "Privacy Policy", href: "#" },
-      { label: "Terms of Service", href: "#" },
-      { label: "Cookie Policy", href: "#" },
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms of Service", href: "/terms" },
+      { label: "Cookie Policy", href: "/cookies" },
     ],
     "Get in Touch": [
       { label: "+91 9897004701", href: "tel:+919897004701", icon: Phone },
