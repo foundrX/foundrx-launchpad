@@ -27,10 +27,6 @@ const teamMembers: TeamMember[] = [
     name: "Urvi",
     roles: ["HR", "Marketing Head", "Head Designer"],
   },
-  {
-    name: "Team Member",
-    roles: ["PR", "Business Analyst", "CIO", "Consultant Head"],
-  },
 ];
 
 const Team = () => {
