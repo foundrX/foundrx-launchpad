@@ -1,7 +1,8 @@
+import { forwardRef } from "react";
 import { Link } from "react-router-dom";
 import { Rocket, Mail, Twitter, Linkedin, Instagram, Phone } from "lucide-react";
 
-const Footer = () => {
+const Footer = forwardRef<HTMLElement>((_, ref) => {
   const footerLinks = {
     Platform: [
       { label: "How It Works", href: "#" },
@@ -22,9 +23,7 @@ const Footer = () => {
       { label: "Press", href: "#" },
     ],
     Legal: [
-      { label: "Privacy Policy", href: "/privacy" },
-      { label: "Terms of Service", href: "/terms" },
-      { label: "Cookie Policy", href: "/cookies" },
+      { label: "Terms & Policies", href: "/terms" },
     ],
     "Get in Touch": [
       { label: "+91 9897004701", href: "tel:+919897004701", icon: Phone },
@@ -40,7 +39,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-muted py-16 md:py-20">
+    <footer ref={ref} className="bg-muted py-16 md:py-20">
       <div className="container px-4">
         <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-12">
           {/* Brand Column */}
@@ -101,6 +100,8 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
+});
+
+Footer.displayName = "Footer";
 
 export default Footer;
