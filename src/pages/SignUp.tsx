@@ -9,6 +9,18 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Rocket, ArrowLeft, GraduationCap, Briefcase, TrendingUp, Users, Wrench, Scale, Phone, User } from "lucide-react";
 import { z } from "zod";
 
+const getDashboardPath = (role: string) => {
+  switch (role) {
+    case "student_founder": return "/dashboard/student";
+    case "mentor": return "/dashboard/mentor";
+    case "investor": return "/dashboard/investor";
+    case "small_business": return "/dashboard/business";
+    case "expert_professional": return "/dashboard/expert";
+    case "freelancer": return "/dashboard/freelancer";
+    default: return "/";
+  }
+};
+
 const signUpSchema = z.object({
   fullName: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
   email: z.string().email("Please enter a valid email"),
@@ -127,7 +139,7 @@ const SignUp = () => {
       }
 
       toast({ title: "Account created!", description: "Welcome to FoundrX! Check your email." });
-      navigate("/");
+      navigate(getDashboardPath(userRole));
     }
 
     setLoading(false);

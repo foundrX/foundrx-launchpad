@@ -20,6 +20,12 @@ import Collaborations from "./pages/Collaborations";
 import Notifications from "./pages/Notifications";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
+import StudentDashboard from "./pages/dashboard/StudentDashboard";
+import InvestorDashboard from "./pages/dashboard/InvestorDashboard";
+import MentorDashboard from "./pages/dashboard/MentorDashboard";
+import SmallBusinessDashboard from "./pages/dashboard/SmallBusinessDashboard";
+import ExpertDashboard from "./pages/dashboard/ExpertDashboard";
+import FreelancerDashboard from "./pages/dashboard/FreelancerDashboard";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +54,13 @@ const App = () => (
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/collaborations" element={<Collaborations />} />
             <Route path="/team" element={<Team />} />
+            {/* Role-specific Dashboards */}
+            <Route path="/dashboard/student/*" element={<StudentDashboard />} />
+            <Route path="/dashboard/investor/*" element={<InvestorDashboard />} />
+            <Route path="/dashboard/mentor/*" element={<MentorDashboard />} />
+            <Route path="/dashboard/business/*" element={<SmallBusinessDashboard />} />
+            <Route path="/dashboard/expert/*" element={<ExpertDashboard />} />
+            <Route path="/dashboard/freelancer/*" element={<FreelancerDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
