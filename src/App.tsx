@@ -18,6 +18,7 @@ import IdeaDetail from "./pages/IdeaDetail";
 import Profile from "./pages/Profile";
 import Collaborations from "./pages/Collaborations";
 import Notifications from "./pages/Notifications";
+import Messages from "./pages/Messages";
 import Terms from "./pages/Terms";
 import Payment from "./pages/Payment";
 import NotFound from "./pages/NotFound";
@@ -54,13 +55,14 @@ const App = () => (
             <Route path="/ideas/:id" element={<IdeaDetail />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/collaborations" element={<Collaborations />} />
+            <Route path="/messages" element={<Messages />} />
             <Route path="/team" element={<Team />} />
             <Route path="/payment" element={<Payment />} />
             {/* Role-specific Dashboards */}
             <Route path="/dashboard/student/*" element={<StudentDashboard />} />
             <Route path="/dashboard/investor/*" element={<InvestorDashboard />} />
             <Route path="/dashboard/mentor/*" element={<MentorDashboard />} />
-            <Route path="/dashboard/small-business/*" element={<SmallBusinessDashboard />} />
+            <Route path="/dashboard/business/*" element={<SmallBusinessDashboard />} />
             <Route path="/dashboard/expert/*" element={<ExpertDashboard />} />
             <Route path="/dashboard/freelancer/*" element={<FreelancerDashboard />} />
             <Route path="*" element={<NotFound />} />

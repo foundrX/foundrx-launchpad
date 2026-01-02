@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Rocket, LogOut, User, Lightbulb, Bell, Users } from "lucide-react";
+import { Menu, X, Rocket, LogOut, User, Lightbulb, Bell, Users, MessageCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const Navbar = () => {
@@ -96,6 +96,13 @@ const Navbar = () => {
                 </Button>
                 <Button 
                   variant="ghost"
+                  onClick={() => navigate("/messages")}
+                  className="font-medium hover:text-primary active:shadow-[0_0_15px_hsl(210,100%,55%,0.5)] transition-all"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                </Button>
+                <Button 
+                  variant="ghost"
                   onClick={() => navigate("/profile")}
                   className="font-medium hover:text-primary active:shadow-[0_0_15px_hsl(210,100%,55%,0.5)] transition-all"
                 >
@@ -183,6 +190,10 @@ const Navbar = () => {
                     <Button variant="ghost" onClick={() => { navigate("/collaborations"); setIsOpen(false); }} className="justify-start">
                       <Users className="w-4 h-4 mr-2" />
                       Collaborations
+                    </Button>
+                    <Button variant="ghost" onClick={() => { navigate("/messages"); setIsOpen(false); }} className="justify-start">
+                      <MessageCircle className="w-4 h-4 mr-2" />
+                      Messages
                     </Button>
                     <Button variant="ghost" onClick={() => { navigate("/profile"); setIsOpen(false); }} className="justify-start">
                       <User className="w-4 h-4 mr-2" />
