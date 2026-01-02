@@ -108,7 +108,7 @@ const PricingSection = () => {
                   </li>
                 ))}
               </ul>
-              <Link to="/join">
+              <Link to="/payment">
                 <Button className="w-full">
                   Go Premium
                 </Button>

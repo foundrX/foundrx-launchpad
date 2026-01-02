@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useAuth } from "@/hooks/useAuth";
+import { useUserRole } from "@/hooks/useUserRole";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -24,8 +25,32 @@ const Auth = () => {
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   
   const { user, signIn, signUp, signInWithGoogle } = useAuth();
+  const { role, isLoading: roleLoading } = useUserRole();
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  // Helper function to get dashboard path based on role
+  const getDashboardPath = (userRole: string | null): string => {
+    switch (userRole) {
+      case "student_founder":
+        return "/dashboard/student";
+      case "mentor":
+        return "/dashboard/mentor";
+      case "investor":
+        return "/dashboard/investor";
+      case "small_business":
+        return "/dashboard/small-business";
+      case "freelancer":
+        return "/dashboard/freelancer";
+      case "expert_professional":
+      case "chartered_accountant":
+      case "lawyer":
+      case "admin_team":
+        return "/dashboard/expert";
+      default:
+        return "/";
+    }
+  };
 
   const handleGoogleSignIn = async () => {
     setIsGoogleLoading(true);
@@ -50,10 +75,11 @@ const Auth = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      navigate("/");
+    if (user && !roleLoading) {
+      const dashboardPath = getDashboardPath(role);
+      navigate(dashboardPath);
     }
-  }, [user, navigate]);
+  }, [user, role, roleLoading, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -102,7 +128,7 @@ const Auth = () => {
           title: isLogin ? "Welcome back!" : "Account created!",
           description: isLogin ? "You have successfully signed in." : "Your account has been created successfully.",
         });
-        navigate("/");
+        // Navigation will be handled by useEffect when role loads
       }
     } catch (err) {
       toast({
