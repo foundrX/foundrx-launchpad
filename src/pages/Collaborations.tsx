@@ -20,7 +20,9 @@ import {
   Lightbulb,
   Send,
   Inbox,
+  MessageCircle,
 } from "lucide-react";
+import { useChat } from "@/hooks/useChat";
 
 interface CollaborationRequest {
   id: string;
@@ -49,6 +51,7 @@ const Collaborations = () => {
   const [incoming, setIncoming] = useState<CollaborationRequest[]>([]);
   const [outgoing, setOutgoing] = useState<CollaborationRequest[]>([]);
   const [loading, setLoading] = useState(true);
+  const { startConversation } = useChat();
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -141,6 +144,15 @@ const Collaborations = () => {
     } catch (error) {
       console.error("Error updating request:", error);
       toast.error("Failed to update request");
+    }
+  };
+
+  const handleStartChat = async (otherUserId: string, collaborationId: string) => {
+    const conversationId = await startConversation(otherUserId, collaborationId);
+    if (conversationId) {
+      navigate("/messages");
+    } else {
+      toast.error("Failed to start conversation");
     }
   };
 
@@ -281,6 +293,16 @@ const Collaborations = () => {
                               </Button>
                             </div>
                           )}
+                          {request.status === "accepted" && (
+                            <Button
+                              size="sm"
+                              onClick={() => handleStartChat(request.from_user_id, request.id)}
+                              className="gradient-secondary text-secondary-foreground"
+                            >
+                              <MessageCircle className="w-4 h-4 mr-1" />
+                              Chat
+                            </Button>
+                          )}
                         </div>
                       </CardContent>
                     </Card>
@@ -341,6 +363,16 @@ const Collaborations = () => {
                               {new Date(request.created_at).toLocaleDateString()}
                             </p>
                           </div>
+                          {request.status === "accepted" && (
+                            <Button
+                              size="sm"
+                              onClick={() => handleStartChat(request.to_user_id, request.id)}
+                              className="gradient-secondary text-secondary-foreground"
+                            >
+                              <MessageCircle className="w-4 h-4 mr-1" />
+                              Chat
+                            </Button>
+                          )}
                         </div>
                       </CardContent>
                     </Card>
