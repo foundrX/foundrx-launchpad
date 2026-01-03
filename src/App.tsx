@@ -22,6 +22,7 @@ import Messages from "./pages/Messages";
 import Terms from "./pages/Terms";
 import Payment from "./pages/Payment";
 import NotFound from "./pages/NotFound";
+import SelectDashboard from "./pages/SelectDashboard";
 import StudentDashboard from "./pages/dashboard/StudentDashboard";
 import InvestorDashboard from "./pages/dashboard/InvestorDashboard";
 import MentorDashboard from "./pages/dashboard/MentorDashboard";
@@ -58,6 +59,8 @@ const App = () => (
             <Route path="/messages" element={<Messages />} />
             <Route path="/team" element={<Team />} />
             <Route path="/payment" element={<Payment />} />
+            {/* Dashboard Selection */}
+            <Route path="/dashboard" element={<SelectDashboard />} />
             {/* Role-specific Dashboards */}
             <Route path="/dashboard/student/*" element={<StudentDashboard />} />
             <Route path="/dashboard/investor/*" element={<InvestorDashboard />} />

@@ -18,24 +18,14 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import {
-  Rocket,
   LogOut,
   Bell,
   Home,
-  Lightbulb,
-  Users,
-  BookOpen,
-  MessageSquare,
   User,
-  TrendingUp,
-  Briefcase,
-  Scale,
-  Wrench,
-  GraduationCap,
-  Settings,
   Crown,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import foundrxLogo from "@/assets/foundrx-logo.jpeg";
 
 interface MenuItem {
   title: string;
@@ -101,10 +91,12 @@ const DashboardLayout = ({ children, menuItems, roleLabel, roleIcon: RoleIcon }:
       <div className="min-h-screen flex w-full bg-background">
         <Sidebar className="border-r border-border">
           <div className="p-4 border-b border-border">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center">
-                <Rocket className="w-5 h-5 text-primary-foreground" />
-              </div>
+            <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+              <img 
+                src={foundrxLogo} 
+                alt="FoundrX Logo" 
+                className="w-10 h-10 rounded-lg object-cover"
+              />
               <span className="text-xl font-bold font-display">FoundrX</span>
             </Link>
           </div>
