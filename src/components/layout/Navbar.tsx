@@ -3,8 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Rocket, LogOut, User, Lightbulb, Bell, Users, MessageCircle } from "lucide-react";
+import { Menu, X, LogOut, User, Bell, Users, MessageCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import foundrxLogo from "@/assets/foundrx-logo.jpeg";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,10 +42,12 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center">
-              <Rocket className="w-5 h-5 text-primary-foreground" />
-            </div>
+          <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <img 
+              src={foundrxLogo} 
+              alt="FoundrX Logo" 
+              className="w-10 h-10 rounded-lg object-cover"
+            />
             <span className="text-xl font-bold font-display">FoundrX</span>
           </Link>
 
