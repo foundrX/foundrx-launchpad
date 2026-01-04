@@ -3,19 +3,30 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Menu, X, LogOut, User, Bell, Users, MessageCircle, LayoutDashboard } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Menu, X, LogOut, User, Bell, Users, MessageCircle, LayoutDashboard, Settings, ChevronDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import foundrxLogo from "@/assets/foundrx-logo.jpeg";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [profile, setProfile] = useState<{ full_name: string | null; avatar_url: string | null } | null>(null);
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
       fetchUnreadCount();
+      fetchProfile();
     }
   }, [user]);
 
@@ -27,6 +38,26 @@ const Navbar = () => {
       .eq("user_id", user.id)
       .eq("is_read", false);
     setUnreadCount(count || 0);
+  };
+
+  const fetchProfile = async () => {
+    if (!user) return;
+    const { data } = await supabase
+      .from("profiles")
+      .select("full_name, avatar_url")
+      .eq("user_id", user.id)
+      .maybeSingle();
+    setProfile(data);
+  };
+
+  const getInitials = () => {
+    if (profile?.full_name) {
+      return profile.full_name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
+    }
+    if (user?.email) {
+      return user.email[0].toUpperCase();
+    }
+    return "U";
   };
 
   const navLinks = [
@@ -74,23 +105,16 @@ const Navbar = () => {
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-3">
             {user ? (
               <>
                 <Button 
                   variant="ghost"
-                  onClick={() => navigate("/dashboard")}
-                  className="font-medium hover:text-primary active:shadow-[0_0_15px_hsl(210,100%,55%,0.5)] transition-all"
-                >
-                  <LayoutDashboard className="w-4 h-4 mr-2" />
-                  Dashboard
-                </Button>
-                <Button 
-                  variant="ghost"
+                  size="icon"
                   onClick={() => navigate("/notifications")}
-                  className="font-medium hover:text-primary active:shadow-[0_0_15px_hsl(210,100%,55%,0.5)] transition-all relative"
+                  className="relative"
                 >
-                  <Bell className="w-4 h-4" />
+                  <Bell className="w-5 h-5" />
                   {unreadCount > 0 && (
                     <Badge className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center text-xs gradient-primary">
                       {unreadCount}
@@ -99,52 +123,69 @@ const Navbar = () => {
                 </Button>
                 <Button 
                   variant="ghost"
-                  onClick={() => navigate("/collaborations")}
-                  className="font-medium hover:text-primary active:shadow-[0_0_15px_hsl(210,100%,55%,0.5)] transition-all"
-                >
-                  <Users className="w-4 h-4" />
-                </Button>
-                <Button 
-                  variant="ghost"
+                  size="icon"
                   onClick={() => navigate("/messages")}
-                  className="font-medium hover:text-primary active:shadow-[0_0_15px_hsl(210,100%,55%,0.5)] transition-all"
                 >
-                  <MessageCircle className="w-4 h-4" />
+                  <MessageCircle className="w-5 h-5" />
                 </Button>
-                <Button 
-                  variant="ghost"
-                  onClick={() => navigate("/profile")}
-                  className="font-medium hover:text-primary active:shadow-[0_0_15px_hsl(210,100%,55%,0.5)] transition-all"
-                >
-                  <User className="w-4 h-4 mr-2" />
-                  Profile
-                </Button>
-                <Button 
-                  onClick={() => navigate("/apply")}
-                  className="gradient-primary text-primary-foreground border-0 rounded-full px-6 active:shadow-[0_0_20px_hsl(210,100%,55%,0.6)] transition-all"
-                >
-                  Apply Now
-                </Button>
-                <Button 
-                  variant="ghost" 
-                  onClick={signOut}
-                  className="font-medium hover:text-primary active:shadow-[0_0_15px_hsl(210,100%,55%,0.5)] transition-all"
-                >
-                  <LogOut className="w-4 h-4" />
-                </Button>
+                
+                {/* User Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="flex items-center gap-2 px-2">
+                      <Avatar className="w-8 h-8">
+                        <AvatarImage src={profile?.avatar_url || undefined} />
+                        <AvatarFallback className="bg-primary/10 text-primary text-sm">
+                          {getInitials()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <ChevronDown className="w-4 h-4 text-muted-foreground" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                    <DropdownMenuLabel>
+                      <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium">{profile?.full_name || "User"}</p>
+                        <p className="text-xs text-muted-foreground">{user.email}</p>
+                      </div>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => navigate("/dashboard")}>
+                      <LayoutDashboard className="w-4 h-4 mr-2" />
+                      Dashboard
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/profile")}>
+                      <User className="w-4 h-4 mr-2" />
+                      Profile
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/collaborations")}>
+                      <Users className="w-4 h-4 mr-2" />
+                      Collaborations
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/apply")}>
+                      <Settings className="w-4 h-4 mr-2" />
+                      Apply Now
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={signOut} className="text-destructive focus:text-destructive">
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Sign Out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </>
             ) : (
               <>
                 <Button 
                   variant="ghost" 
                   onClick={() => navigate("/auth")}
-                  className="font-medium hover:text-primary active:shadow-[0_0_15px_hsl(210,100%,55%,0.5)] transition-all"
+                  className="font-medium hover:text-primary"
                 >
                   Sign In
                 </Button>
                 <Button 
                   onClick={() => navigate("/join")}
-                  className="gradient-primary text-primary-foreground border-0 rounded-full px-6 active:shadow-[0_0_20px_hsl(210,100%,55%,0.6)] transition-all"
+                  className="gradient-primary text-primary-foreground border-0 rounded-full px-6"
                 >
                   Join FoundrX
                 </Button>
@@ -171,7 +212,7 @@ const Navbar = () => {
                   <Link
                     key={link.href}
                     to={link.href}
-                    className="text-sm font-medium text-muted-foreground hover:text-primary active:text-primary active:drop-shadow-[0_0_8px_hsl(210,100%,55%)] transition-all py-2"
+                    className="text-sm font-medium text-muted-foreground hover:text-primary py-2"
                     onClick={() => setIsOpen(false)}
                   >
                     {link.label}
@@ -180,7 +221,7 @@ const Navbar = () => {
                   <a
                     key={link.href}
                     href={link.href}
-                    className="text-sm font-medium text-muted-foreground hover:text-primary active:text-primary active:drop-shadow-[0_0_8px_hsl(210,100%,55%)] transition-all py-2"
+                    className="text-sm font-medium text-muted-foreground hover:text-primary py-2"
                     onClick={() => setIsOpen(false)}
                   >
                     {link.label}
@@ -190,6 +231,18 @@ const Navbar = () => {
               <div className="flex flex-col gap-2 pt-4 border-t border-border">
                 {user ? (
                   <>
+                    <div className="flex items-center gap-3 px-2 py-2 mb-2">
+                      <Avatar className="w-10 h-10">
+                        <AvatarImage src={profile?.avatar_url || undefined} />
+                        <AvatarFallback className="bg-primary/10 text-primary">
+                          {getInitials()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="font-medium text-sm">{profile?.full_name || "User"}</p>
+                        <p className="text-xs text-muted-foreground">{user.email}</p>
+                      </div>
+                    </div>
                     <Button variant="ghost" onClick={() => { navigate("/dashboard"); setIsOpen(false); }} className="justify-start">
                       <LayoutDashboard className="w-4 h-4 mr-2" />
                       Dashboard
@@ -216,7 +269,7 @@ const Navbar = () => {
                     <Button onClick={() => { navigate("/apply"); setIsOpen(false); }} className="gradient-primary text-primary-foreground border-0 rounded-full">
                       Apply Now
                     </Button>
-                    <Button variant="ghost" onClick={signOut} className="justify-start">
+                    <Button variant="ghost" onClick={signOut} className="justify-start text-destructive hover:text-destructive">
                       <LogOut className="w-4 h-4 mr-2" />
                       Sign Out
                     </Button>
