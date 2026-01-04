@@ -5,37 +5,37 @@ import { Rocket, Mail, Twitter, Linkedin, Instagram, Phone } from "lucide-react"
 const Footer = forwardRef<HTMLElement>((_, ref) => {
   const footerLinks = {
     Platform: [
-      { label: "How It Works", href: "#" },
-      { label: "Features", href: "#" },
-      { label: "Pricing", href: "#" },
-      { label: "Success Stories", href: "#" },
+      { label: "How It Works", href: "/about" },
+      { label: "Features", href: "/about" },
+      { label: "Workshops", href: "/workshop" },
+      { label: "Ideas", href: "/ideas" },
     ],
     Resources: [
-      { label: "Workshops", href: "#" },
-      { label: "Blog", href: "#" },
-      { label: "Guides", href: "#" },
-      { label: "Community", href: "#" },
+      { label: "Workshops", href: "/workshop" },
+      { label: "Ideas", href: "/ideas" },
+      { label: "About Us", href: "/about" },
+      { label: "Join FoundrX", href: "/join" },
     ],
     Company: [
-      { label: "About Us", href: "#" },
-      { label: "Careers", href: "#" },
-      { label: "Contact", href: "#" },
-      { label: "Press", href: "#" },
+      { label: "About Us", href: "/about" },
+      { label: "Our Team", href: "/team" },
+      { label: "Apply Now", href: "/apply" },
+      { label: "Contact", href: "mailto:foundrxofficial@gmail.com", external: true },
     ],
     Legal: [
       { label: "Terms & Policies", href: "/terms" },
     ],
     "Get in Touch": [
-      { label: "+91 9897004701", href: "tel:+919897004701", icon: Phone },
-      { label: "foundrxofficial@gmail.com", href: "mailto:foundrxofficial@gmail.com", icon: Mail },
+      { label: "+91 9897004701", href: "tel:+919897004701", icon: Phone, external: true },
+      { label: "foundrxofficial@gmail.com", href: "mailto:foundrxofficial@gmail.com", icon: Mail, external: true },
     ],
   };
 
   const socialLinks = [
-    { icon: Twitter, href: "#", label: "Twitter" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
-    { icon: Instagram, href: "https://instagram.com/FoundrX_Official", label: "Instagram" },
-    { icon: Mail, href: "mailto:foundrxofficial@gmail.com", label: "Email" },
+    { icon: Twitter, href: "https://twitter.com", label: "Twitter", external: true },
+    { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn", external: true },
+    { icon: Instagram, href: "https://instagram.com/FoundrX_Official", label: "Instagram", external: true },
+    { icon: Mail, href: "mailto:foundrxofficial@gmail.com", label: "Email", external: true },
   ];
 
   return (
@@ -58,6 +58,8 @@ const Footer = forwardRef<HTMLElement>((_, ref) => {
                 <a
                   key={social.label}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center transition-colors"
                   aria-label={social.label}
                 >
@@ -74,13 +76,25 @@ const Footer = forwardRef<HTMLElement>((_, ref) => {
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link.label}>
-                    <a
-                      href={link.href}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
-                    >
-                      {'icon' in link && link.icon && <link.icon className="w-4 h-4" />}
-                      {link.label}
-                    </a>
+                    {'external' in link && link.external ? (
+                      <a
+                        href={link.href}
+                        target={link.href.startsWith('mailto:') || link.href.startsWith('tel:') ? undefined : "_blank"}
+                        rel={link.href.startsWith('mailto:') || link.href.startsWith('tel:') ? undefined : "noopener noreferrer"}
+                        className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
+                      >
+                        {'icon' in link && link.icon && <link.icon className="w-4 h-4" />}
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link
+                        to={link.href}
+                        className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
+                      >
+                        {'icon' in link && link.icon && <link.icon className="w-4 h-4" />}
+                        {link.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
