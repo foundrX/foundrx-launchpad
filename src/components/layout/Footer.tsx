@@ -7,14 +7,20 @@ const Footer = forwardRef<HTMLElement>((_, ref) => {
     Platform: [
       { label: "How It Works", href: "/about" },
       { label: "Features", href: "/about" },
-      { label: "Workshops", href: "/workshop" },
+      { label: "Workshops", href: "/workshops" },
       { label: "Ideas", href: "/ideas" },
     ],
     Resources: [
-      { label: "Workshops", href: "/workshop" },
-      { label: "Ideas", href: "/ideas" },
+      { label: "All Workshops", href: "/workshops" },
+      { label: "Browse Ideas", href: "/ideas" },
       { label: "About Us", href: "/about" },
       { label: "Join FoundrX", href: "/join" },
+    ],
+    Workshops: [
+      { label: "Startup Fundamentals", href: "/workshops" },
+      { label: "Pitch Training", href: "/workshops" },
+      { label: "Business Planning", href: "/workshops" },
+      { label: "Marketing 101", href: "/workshops" },
     ],
     Company: [
       { label: "About Us", href: "/about" },
@@ -105,7 +111,7 @@ const Footer = forwardRef<HTMLElement>((_, ref) => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            © 2024 FoundrX. All rights reserved.
+            © 2026 FoundrX. All rights reserved.
           </p>
           <p className="text-sm text-muted-foreground">
             Made with ❤️ by young founders, for young founders
