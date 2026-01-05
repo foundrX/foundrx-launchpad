@@ -124,11 +124,19 @@ const Auth = () => {
           });
         }
       } else {
-        toast({
-          title: isLogin ? "Welcome back!" : "Account created!",
-          description: isLogin ? "You have successfully signed in." : "Your account has been created successfully.",
-        });
-        // Navigation will be handled by useEffect when role loads
+        if (isLogin) {
+          toast({
+            title: "Welcome back!",
+            description: "You have successfully signed in.",
+          });
+        } else {
+          toast({
+            title: "Check your email!",
+            description: "We've sent you a verification link. Please verify your email to continue.",
+          });
+          navigate(`/verify-email?email=${encodeURIComponent(email)}`);
+          return;
+        }
       }
     } catch (err) {
       toast({
