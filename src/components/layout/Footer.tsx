@@ -16,12 +16,6 @@ const Footer = forwardRef<HTMLElement>((_, ref) => {
       { label: "About Us", href: "/about" },
       { label: "Join FoundrX", href: "/join" },
     ],
-    Workshops: [
-      { label: "Startup Fundamentals", href: "/workshops" },
-      { label: "Pitch Training", href: "/workshops" },
-      { label: "Business Planning", href: "/workshops" },
-      { label: "Marketing 101", href: "/workshops" },
-    ],
     Company: [
       { label: "About Us", href: "/about" },
       { label: "Our Team", href: "/team" },
