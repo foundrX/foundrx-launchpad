@@ -13,7 +13,7 @@ interface TeamMember {
 const teamMembers: TeamMember[] = [
   {
     name: "Sarah",
-    roles: ["Founder", "CEO", "Administrative Head", "Social Media Manager", "Marketing"],
+    roles: ["Founder", "CEO", "Social Media Manager", "Marketing"],
   },
   {
     name: "Aannya",
