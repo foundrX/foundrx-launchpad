@@ -39,7 +39,7 @@ const Auth = () => {
       case "investor":
         return "/dashboard/investor";
       case "small_business":
-        return "/dashboard/small-business";
+        return "/dashboard/business";
       case "freelancer":
         return "/dashboard/freelancer";
       case "expert_professional":
@@ -134,7 +134,7 @@ const Auth = () => {
             title: "Check your email!",
             description: "We've sent you a verification link. Please verify your email to continue.",
           });
-          navigate(`/verify-email?email=${encodeURIComponent(email)}`);
+          navigate(`/email-confirmation?email=${encodeURIComponent(email)}`);
           return;
         }
       }
