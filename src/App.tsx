@@ -14,6 +14,7 @@ import Team from "./pages/Team";
 import Workshop from "./pages/Workshop";
 import Workshops from "./pages/Workshops";
 import VerifyEmail from "./pages/VerifyEmail";
+import EmailConfirmation from "./pages/EmailConfirmation";
 import Apply from "./pages/Apply";
 import Ideas from "./pages/Ideas";
 import NewIdea from "./pages/NewIdea";
@@ -51,6 +52,7 @@ const App = () => (
             <Route path="/workshops" element={<Workshops />} />
             <Route path="/workshop/:id" element={<Workshop />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route path="/email-confirmation" element={<EmailConfirmation />} />
             <Route path="/join" element={<Join />} />
             <Route path="/signup/:role" element={<SignUp />} />
             <Route path="/profile" element={<Profile />} />

@@ -90,10 +90,11 @@ const SignUp = () => {
       email: formData.email,
       password: formData.password,
       options: {
-        emailRedirectTo: `${window.location.origin}/`,
+        emailRedirectTo: `${window.location.origin}/verify-email`,
         data: {
           full_name: formData.fullName,
           phone: formData.phone,
+          pending_role: userRole,
         },
       },
     });
@@ -138,8 +139,8 @@ const SignUp = () => {
         console.error("Failed to send welcome email:", emailError);
       }
 
-      toast({ title: "Account created!", description: "Welcome to FoundrX! Check your email." });
-      navigate(getDashboardPath(userRole));
+      // Redirect to email confirmation page
+      navigate(`/email-confirmation?email=${encodeURIComponent(formData.email)}`);
     }
 
     setLoading(false);
