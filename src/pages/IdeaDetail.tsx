@@ -7,8 +7,8 @@ import Footer from "@/components/layout/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
+import { IdeaDetailSkeleton } from "@/components/skeletons/PageSkeletons";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "sonner";
 import {
@@ -221,9 +221,7 @@ const IdeaDetail = () => {
         <Navbar />
         <main className="pt-24 pb-16">
           <div className="container px-4 max-w-4xl">
-            <Skeleton className="h-8 w-48 mb-4" />
-            <Skeleton className="h-64 mb-6" />
-            <Skeleton className="h-32" />
+            <IdeaDetailSkeleton />
           </div>
         </main>
         <Footer />

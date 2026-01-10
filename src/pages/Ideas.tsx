@@ -6,10 +6,10 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Lightbulb, Plus, Eye, MessageSquare, Users, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { IdeasGridSkeleton, PageHeaderSkeleton } from "@/components/skeletons/PageSkeletons";
 
 interface Idea {
   id: string;
@@ -137,11 +137,7 @@ const Ideas = () => {
           </div>
 
           {loading ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[...Array(6)].map((_, i) => (
-                <Skeleton key={i} className="h-64" />
-              ))}
-            </div>
+            <IdeasGridSkeleton />
           ) : filteredIdeas.length === 0 ? (
             <Card className="bg-card border-border p-12 text-center">
               <Lightbulb className="w-16 h-16 text-primary mx-auto mb-4" />

@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { GraduationCap, Calendar, Clock, ArrowRight, User } from "lucide-react";
 import { format } from "date-fns";
+import { WorkshopsGridSkeleton } from "@/components/skeletons/PageSkeletons";
 
 interface Workshop {
   id: string;
@@ -59,18 +59,7 @@ const WorkshopsList = () => {
         </div>
 
         {loading ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, i) => (
-              <Card key={i} className="bg-card border-border animate-pulse">
-                <CardContent className="p-6">
-                  <div className="h-6 bg-muted rounded w-1/3 mb-4" />
-                  <div className="h-8 bg-muted rounded w-full mb-2" />
-                  <div className="h-20 bg-muted rounded w-full mb-4" />
-                  <div className="h-12 bg-muted rounded w-full" />
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <WorkshopsGridSkeleton />
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {workshops.map((workshop) => (

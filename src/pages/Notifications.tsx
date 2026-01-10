@@ -4,10 +4,10 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
+import { NotificationsSkeleton } from "@/components/skeletons/PageSkeletons";
 import {
   Bell,
   MessageSquare,
@@ -108,12 +108,10 @@ const Notifications = () => {
         <Navbar />
         <main className="pt-24 pb-16">
           <div className="container px-4 max-w-2xl">
-            <Skeleton className="h-8 w-48 mb-8" />
-            <div className="space-y-4">
-              {[...Array(5)].map((_, i) => (
-                <Skeleton key={i} className="h-20" />
-              ))}
-            </div>
+            <h1 className="text-3xl md:text-4xl font-bold font-display mb-8">
+              <span className="text-gradient">Notifications</span>
+            </h1>
+            <NotificationsSkeleton />
           </div>
         </main>
         <Footer />

@@ -4,10 +4,10 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
+import { CollaborationsSkeleton } from "@/components/skeletons/PageSkeletons";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
@@ -190,13 +190,10 @@ const Collaborations = () => {
         <Navbar />
         <main className="pt-24 pb-16">
           <div className="container px-4 max-w-3xl">
-            <Skeleton className="h-8 w-48 mb-8" />
-            <Skeleton className="h-12 w-full mb-6" />
-            <div className="space-y-4">
-              {[...Array(3)].map((_, i) => (
-                <Skeleton key={i} className="h-32" />
-              ))}
-            </div>
+            <h1 className="text-3xl md:text-4xl font-bold font-display mb-8">
+              <span className="text-gradient">Collaborations</span>
+            </h1>
+            <CollaborationsSkeleton />
           </div>
         </main>
         <Footer />
