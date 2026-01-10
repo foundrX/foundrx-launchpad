@@ -9,8 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
+import { ProfileSkeleton } from "@/components/skeletons/PageSkeletons";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "sonner";
 import {
@@ -155,11 +155,12 @@ const Profile = () => {
         <Navbar />
         <main className="pt-24 pb-16">
           <div className="container px-4 max-w-4xl">
-            <Skeleton className="h-10 w-48 mb-8" />
-            <div className="grid md:grid-cols-2 gap-6">
-              <Skeleton className="h-96" />
-              <Skeleton className="h-96" />
+            <div className="flex items-center justify-between mb-8">
+              <h1 className="text-3xl md:text-4xl font-bold font-display">
+                My <span className="text-primary">Profile</span>
+              </h1>
             </div>
+            <ProfileSkeleton />
           </div>
         </main>
         <Footer />

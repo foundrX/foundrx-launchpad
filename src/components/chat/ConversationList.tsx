@@ -2,8 +2,8 @@ import { useChat } from "@/hooks/useChat";
 import { useAuth } from "@/hooks/useAuth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
 import { formatDistanceToNow } from "date-fns";
+import { ConversationListSkeleton } from "@/components/skeletons/PageSkeletons";
 
 interface ConversationListProps {
   onSelectConversation: (conversationId: string, participantName: string, participantAvatar: string | null) => void;
@@ -15,19 +15,7 @@ const ConversationList = ({ onSelectConversation, selectedId }: ConversationList
   const { conversations, loading } = useChat();
 
   if (loading) {
-    return (
-      <div className="space-y-2 p-2">
-        {[...Array(5)].map((_, i) => (
-          <div key={i} className="flex items-center gap-3 p-3">
-            <Skeleton className="h-12 w-12 rounded-full" />
-            <div className="flex-1">
-              <Skeleton className="h-4 w-24 mb-2" />
-              <Skeleton className="h-3 w-32" />
-            </div>
-          </div>
-        ))}
-      </div>
-    );
+    return <ConversationListSkeleton />;
   }
 
   if (conversations.length === 0) {

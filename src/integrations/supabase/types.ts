@@ -375,10 +375,18 @@ export type Database = {
           behavior_score: number | null
           bio: string | null
           created_at: string
+          date_of_birth: string | null
           email: string | null
           full_name: string | null
           id: string
+          is_minor: boolean | null
           is_verified: boolean | null
+          parent_email: string | null
+          parent_name: string | null
+          parent_phone: string | null
+          parent_verification_sent_at: string | null
+          parent_verification_token: string | null
+          parent_verified: boolean | null
           phone: string | null
           portfolio_url: string | null
           school: string | null
@@ -392,10 +400,18 @@ export type Database = {
           behavior_score?: number | null
           bio?: string | null
           created_at?: string
+          date_of_birth?: string | null
           email?: string | null
           full_name?: string | null
           id?: string
+          is_minor?: boolean | null
           is_verified?: boolean | null
+          parent_email?: string | null
+          parent_name?: string | null
+          parent_phone?: string | null
+          parent_verification_sent_at?: string | null
+          parent_verification_token?: string | null
+          parent_verified?: boolean | null
           phone?: string | null
           portfolio_url?: string | null
           school?: string | null
@@ -409,10 +425,18 @@ export type Database = {
           behavior_score?: number | null
           bio?: string | null
           created_at?: string
+          date_of_birth?: string | null
           email?: string | null
           full_name?: string | null
           id?: string
+          is_minor?: boolean | null
           is_verified?: boolean | null
+          parent_email?: string | null
+          parent_name?: string | null
+          parent_phone?: string | null
+          parent_verification_sent_at?: string | null
+          parent_verification_token?: string | null
+          parent_verified?: boolean | null
           phone?: string | null
           portfolio_url?: string | null
           school?: string | null
