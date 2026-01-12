@@ -72,31 +72,43 @@ const Notifications = () => {
   };
 
   const markAsRead = async (id: string) => {
+    // Optimistic update - immediately mark as read in UI
+    const previousNotifications = [...notifications];
+    setNotifications((prev) =>
+      prev.map((n) => (n.id === id ? { ...n, is_read: true } : n))
+    );
+
     try {
-      await supabase
+      const { error } = await supabase
         .from("notifications")
         .update({ is_read: true })
         .eq("id", id);
 
-      setNotifications((prev) =>
-        prev.map((n) => (n.id === id ? { ...n, is_read: true } : n))
-      );
+      if (error) throw error;
     } catch (error) {
+      // Rollback on error
       console.error("Error marking notification as read:", error);
+      setNotifications(previousNotifications);
     }
   };
 
   const markAllAsRead = async () => {
+    // Optimistic update - immediately mark all as read in UI
+    const previousNotifications = [...notifications];
+    setNotifications((prev) => prev.map((n) => ({ ...n, is_read: true })));
+
     try {
-      await supabase
+      const { error } = await supabase
         .from("notifications")
         .update({ is_read: true })
         .eq("user_id", user?.id)
         .eq("is_read", false);
 
-      setNotifications((prev) => prev.map((n) => ({ ...n, is_read: true })));
+      if (error) throw error;
     } catch (error) {
+      // Rollback on error
       console.error("Error marking all as read:", error);
+      setNotifications(previousNotifications);
     }
   };
 

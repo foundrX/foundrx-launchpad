@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useChatMessages } from "@/hooks/useChat";
+import { useChatMessages, Message } from "@/hooks/useChat";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -10,11 +10,11 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Send,
-  Paperclip,
   Phone,
   Link2,
   Store,
   ArrowLeft,
+  Loader2,
 } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
@@ -33,9 +33,9 @@ const ChatWindow = ({
   onBack,
 }: ChatWindowProps) => {
   const { user } = useAuth();
-  const { messages, loading } = useChatMessages(conversationId);
+  const { messages, loading, addOptimisticMessage, removeOptimisticMessage } = useChatMessages(conversationId);
   const [newMessage, setNewMessage] = useState("");
-  const [sending, setSending] = useState(false);
+  const [sendingMessages, setSendingMessages] = useState<Set<string>>(new Set());
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -48,12 +48,32 @@ const ChatWindow = ({
   const handleSend = async () => {
     if (!newMessage.trim() || !user) return;
 
-    setSending(true);
+    const tempId = `temp-${Date.now()}`;
+    const messageContent = newMessage.trim();
+    
+    // Optimistic update - add message immediately
+    const optimisticMessage: Message = {
+      id: tempId,
+      conversation_id: conversationId,
+      sender_id: user.id,
+      content: messageContent,
+      message_type: "text",
+      metadata: null,
+      created_at: new Date().toISOString(),
+      is_read: false,
+      sender_profile: null,
+      isOptimistic: true,
+    };
+    
+    addOptimisticMessage(optimisticMessage);
+    setNewMessage("");
+    setSendingMessages(prev => new Set(prev).add(tempId));
+
     try {
       const { error } = await supabase.from("chat_messages").insert({
         conversation_id: conversationId,
         sender_id: user.id,
-        content: newMessage.trim(),
+        content: messageContent,
         message_type: "text",
       });
 
@@ -63,13 +83,20 @@ const ChatWindow = ({
         .from("chat_conversations")
         .update({ updated_at: new Date().toISOString() })
         .eq("id", conversationId);
-
-      setNewMessage("");
+      
+      // Remove the optimistic message (realtime will add the real one)
+      removeOptimisticMessage(tempId);
     } catch (error) {
       console.error("Error sending message:", error);
       toast.error("Failed to send message");
+      // Remove optimistic message on error
+      removeOptimisticMessage(tempId);
     } finally {
-      setSending(false);
+      setSendingMessages(prev => {
+        const next = new Set(prev);
+        next.delete(tempId);
+        return next;
+      });
     }
   };
 
@@ -170,10 +197,12 @@ const ChatWindow = ({
           ) : (
             messages.map((msg) => {
               const isOwn = msg.sender_id === user?.id;
+              const isOptimistic = msg.isOptimistic;
+              const isSending = sendingMessages.has(msg.id);
               return (
                 <div
                   key={msg.id}
-                  className={`flex ${isOwn ? "justify-end" : "justify-start"}`}
+                  className={`flex ${isOwn ? "justify-end" : "justify-start"} ${isOptimistic ? "animate-in fade-in-50 duration-200" : ""}`}
                 >
                   <div className={`flex gap-2 max-w-[75%] ${isOwn ? "flex-row-reverse" : ""}`}>
                     {!isOwn && (
@@ -190,7 +219,7 @@ const ChatWindow = ({
                           isOwn
                             ? "gradient-primary text-primary-foreground"
                             : "bg-muted"
-                        }`}
+                        } ${isOptimistic ? "opacity-70" : ""}`}
                       >
                         {msg.message_type !== "text" && (
                           <div className="flex items-center gap-2 mb-1">
@@ -202,9 +231,14 @@ const ChatWindow = ({
                         )}
                         <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
                       </div>
-                      <p className={`text-xs text-muted-foreground mt-1 ${isOwn ? "text-right" : ""}`}>
-                        {format(new Date(msg.created_at), "HH:mm")}
-                      </p>
+                      <div className={`flex items-center gap-1 mt-1 ${isOwn ? "justify-end" : ""}`}>
+                        <p className="text-xs text-muted-foreground">
+                          {format(new Date(msg.created_at), "HH:mm")}
+                        </p>
+                        {isSending && (
+                          <Loader2 className="w-3 h-3 animate-spin text-muted-foreground" />
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -259,14 +293,17 @@ const ChatWindow = ({
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             className="flex-1 bg-muted border-border"
-            disabled={sending}
           />
           <Button
             type="submit"
-            disabled={!newMessage.trim() || sending}
+            disabled={!newMessage.trim() || sendingMessages.size > 0}
             className="gradient-primary text-primary-foreground"
           >
-            <Send className="w-4 h-4" />
+            {sendingMessages.size > 0 ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <Send className="w-4 h-4" />
+            )}
           </Button>
         </form>
       </div>
