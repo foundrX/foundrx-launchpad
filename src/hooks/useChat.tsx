@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 
-interface Message {
+export interface Message {
   id: string;
   conversation_id: string;
   sender_id: string;
@@ -14,7 +14,8 @@ interface Message {
   sender_profile?: {
     full_name: string | null;
     avatar_url: string | null;
-  };
+  } | null;
+  isOptimistic?: boolean;
 }
 
 interface Conversation {
@@ -218,6 +219,7 @@ export const useChat = () => {
 export const useChatMessages = (conversationId: string | null) => {
   const { user } = useAuth();
   const [messages, setMessages] = useState<Message[]>([]);
+  const [optimisticMessages, setOptimisticMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchMessages = useCallback(async () => {
@@ -267,6 +269,14 @@ export const useChatMessages = (conversationId: string | null) => {
     }
   }, [conversationId, user]);
 
+  const addOptimisticMessage = useCallback((message: Message) => {
+    setOptimisticMessages(prev => [...prev, message]);
+  }, []);
+
+  const removeOptimisticMessage = useCallback((tempId: string) => {
+    setOptimisticMessages(prev => prev.filter(m => m.id !== tempId));
+  }, []);
+
   useEffect(() => {
     fetchMessages();
 
@@ -284,6 +294,8 @@ export const useChatMessages = (conversationId: string | null) => {
           },
           () => {
             fetchMessages();
+            // Clear optimistic messages when real data arrives
+            setOptimisticMessages([]);
           }
         )
         .subscribe();
@@ -294,5 +306,14 @@ export const useChatMessages = (conversationId: string | null) => {
     }
   }, [conversationId, fetchMessages]);
 
-  return { messages, loading, fetchMessages };
+  // Combine real messages with optimistic ones
+  const allMessages = [...messages, ...optimisticMessages];
+
+  return { 
+    messages: allMessages, 
+    loading, 
+    fetchMessages,
+    addOptimisticMessage,
+    removeOptimisticMessage,
+  };
 };
