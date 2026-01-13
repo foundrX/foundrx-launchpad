@@ -35,8 +35,8 @@ const FreelancerDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!authLoading && !user) {
-      navigate("/auth");
+    if (!authLoading && user === null) {
+      navigate("/auth", { replace: true });
     }
   }, [user, authLoading, navigate]);
 
