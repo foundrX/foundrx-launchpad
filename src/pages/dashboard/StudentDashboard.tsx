@@ -35,8 +35,9 @@ const StudentDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!authLoading && !user) {
-      navigate("/auth");
+    // Only redirect after auth is fully initialized and we're sure there's no user
+    if (!authLoading && user === null) {
+      navigate("/auth", { replace: true });
     }
   }, [user, authLoading, navigate]);
 
