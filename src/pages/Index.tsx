@@ -4,6 +4,7 @@ import HeroCarousel from "@/components/sections/HeroCarousel";
 import HowWeHelp from "@/components/sections/HowWeHelp";
 import WorkshopsList from "@/components/sections/WorkshopsList";
 import PricingSection from "@/components/sections/PricingSection";
+import ReviewsCarousel from "@/components/sections/ReviewsCarousel";
 import CTA from "@/components/sections/CTA";
 
 const Index = () => {
@@ -19,6 +20,9 @@ const Index = () => {
       </section>
       <section id="workshops">
         <WorkshopsList />
+      </section>
+      <section id="testimonials">
+        <ReviewsCarousel />
       </section>
       <CTA />
       <Footer />
