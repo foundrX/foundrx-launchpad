@@ -10,6 +10,7 @@ interface Review {
   role: string | null;
   content: string;
   rating: number | null;
+  image_url: string | null;
 }
 
 const ReviewsCarousel = () => {
@@ -60,10 +61,18 @@ const ReviewsCarousel = () => {
               </p>
 
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-full gradient-primary flex items-center justify-center text-xl font-bold text-primary-foreground">
-                    {review.name.charAt(0)}
-                  </div>
+              <div className="flex items-center gap-4">
+                  {review.image_url ? (
+                    <img 
+                      src={review.image_url} 
+                      alt={review.name}
+                      className="w-14 h-14 rounded-full object-cover border-2 border-primary/20"
+                    />
+                  ) : (
+                    <div className="w-14 h-14 rounded-full gradient-primary flex items-center justify-center text-xl font-bold text-primary-foreground">
+                      {review.name.charAt(0)}
+                    </div>
+                  )}
                   <div>
                     <div className="font-semibold text-lg">{review.name}</div>
                     <div className="text-muted-foreground">{review.role}</div>
